@@ -1,18 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const LessPluginCleanCss = require('less-plugin-clean-css');
 
 module.exports = {
     entry: './App.js',
-    context: path.join(__dirname, './../preview'),
+    context: path.join(__dirname, '../src'),
     output: {
-        path: path.join(__dirname, './../preview'),
-        filename: 'bundle.js'
+        path: path.join(__dirname, '../dist'),
+        filename: 'main.js'
     },
     mode: 'development',
     devServer: {
-        contentBase: './index.html',
+        contentBase: '../dist/index.html',
         historyApiFallback: true,
         hot: true,
         port: 9000,
@@ -31,24 +30,21 @@ module.exports = {
                     {
                         loader:
                         'less-loader',
-                        // options: {
-                        //     plugins: [
-                        //         new LessPluginCleanCss({
-                        //             advanced: true,
-                        //         }),
-                        //     ],
-                        // },
                     },
                 ],
             },
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            hash: true,
+            template: './index.html',
+            filename: 'index.html'
+        }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
     ],
     resolve: {
         extensions: ['.js', '.jsx']
-    }
+    },
 };
